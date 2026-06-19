@@ -1,0 +1,159 @@
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=general-sans@300,400,500,600&display=swap');
+
+:root {
+  --step--2: clamp(0.69rem, 0.67rem + 0.10vw, 0.75rem);
+  --step--1: clamp(0.83rem, 0.80rem + 0.15vw, 0.92rem);
+  --step-0:  clamp(1.00rem, 0.95rem + 0.25vw, 1.15rem);
+  --display: clamp(2.2rem, 1.5rem + 3.5vw, 4.2rem);
+
+  --measure: 46ch;
+  --lh-display: 1.02;
+  --tracking-display: -0.035em;
+  --tracking-eyebrow: 0.28em;
+
+  --font-display: 'Clash Display', system-ui, sans-serif;
+  --font-body: 'General Sans', system-ui, -apple-system, sans-serif;
+}
+
+* { font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1; }
+html, body, #root { min-height: 100%; margin: 0; padding: 0; }
+body {
+  background: #000003;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  color: #fff7ea;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ─── Stage ─────────────────────────────────────────────────────── */
+.stage {
+  position: fixed;
+  inset: 0;
+  background: #000003;
+  overflow: hidden;
+}
+
+.canvas-wrap { position: fixed; inset: 0; z-index: 0; }
+.canvas-wrap canvas { display: block; width: 100% !important; height: 100% !important; }
+
+/* ─── Scrim — darker for this piece, the void demands it ────────── */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg,
+      rgba(0, 0, 3, 0.78) 0%,
+      rgba(0, 0, 3, 0.40) 22%,
+      transparent 38%,
+      transparent 58%,
+      rgba(0, 0, 3, 0.25) 78%,
+      rgba(0, 0, 3, 0.55) 100%
+    );
+}
+
+/* ─── Film grain ────────────────────────────────────────────────── */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' /%3E%3C/svg%3E");
+}
+
+/* ─── Typography ────────────────────────────────────────────────── */
+.copy {
+  position: fixed;
+  left: clamp(24px, 5vw, 72px);
+  bottom: clamp(28px, 6vh, 72px);
+  z-index: 3;
+  max-width: 580px;
+  padding: clamp(28px, 3vw, 44px);
+  border-radius: 32px;
+  background: linear-gradient(160deg, rgba(2, 2, 8, 0.60), rgba(2, 2, 8, 0.75));
+  backdrop-filter: blur(16px) saturate(1.15);
+  -webkit-backdrop-filter: blur(16px) saturate(1.15);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 30px 100px rgba(0, 0, 0, 0.50), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: rgba(255, 247, 234, 0.58);
+  margin: 0 0 16px;
+}
+
+.copy h1 {
+  font-family: var(--font-display);
+  font-size: var(--display);
+  font-weight: 600;
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
+  color: #fff7ea;
+  text-wrap: balance;
+  text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
+  margin: 0;
+}
+
+.deck {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: 400;
+  line-height: 1.55;
+  color: rgba(255, 247, 234, 0.72);
+  max-width: var(--measure);
+  text-wrap: pretty;
+  margin: 20px 0 0;
+}
+
+/* ─── Corner sigil ──────────────────────────────────────────────── */
+.sigil {
+  position: fixed;
+  right: clamp(20px, 3vw, 36px);
+  top: clamp(20px, 3vw, 32px);
+  z-index: 3;
+  text-align: right;
+}
+
+.sigil span {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 247, 234, 0.45);
+}
+
+.sigil-dim {
+  color: rgba(255, 247, 234, 0.22) !important;
+  margin-top: 4px;
+}
+
+/* ─── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 760px) {
+  .copy {
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    max-width: none;
+    padding: 22px;
+    border-radius: 24px;
+  }
+  .copy h1 { font-size: clamp(1.6rem, 8vw, 2.6rem); }
+  .deck { font-size: 0.95rem; }
+  .sigil { right: 14px; top: 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain { opacity: 0.03; }
+}
